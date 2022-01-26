@@ -6,9 +6,9 @@ import (
     "errors"
 )
 
-west := "HS rev korn kylling"
-boat := ""
-east := ""
+var west string = "HS rev korn kylling"
+var boat string = ""
+var east string = ""
 
 func ViewState() string {
     return fmt.Sprintf("[%s ---V \\____%s_____/ _______%s______Ø---]", west, boat, east)
@@ -21,15 +21,15 @@ func PutInBoat(item string){
     // put HS in the boat from West and East so that it can fetch the item
     // from the other side
     if strings.Contains(west, item) {
-        tmpWest = strings.ReplaceAll(west, item, "")
+        tmpWest := strings.ReplaceAll(west, item, "")
         tmpWest = strings.TrimSpace(tmpWest)
 
         if tmpWest == "rev kylling" || tmpWest == "kylling rev" {
-            return errors.New("You can't leave 'rev' and 'kylling' together alone")
+            errors.New("You can't leave 'rev' and 'kylling' together alone")
         }
 
         if len(strings.Fields(boat)) > 2 {
-            return errors.New("You cant bring more than TWO items/things on the boat")
+            errors.New("You cant bring more than TWO items/things on the boat")
         }
 
         west = tmpWest
@@ -37,21 +37,20 @@ func PutInBoat(item string){
 
 
     if strings.Contains(east, item) {
-        tmpEast = strings.ReplaceAll(east, item, "")
+        tmpEast := strings.ReplaceAll(east, item, "")
         tmpEast = strings.TrimSpace(tmpEast)
 
         if tmpEast == "rev kylling" || tmpEast == "kylling rev" {
-            return errors.New("You can't leave 'rev' and 'kylling' together alone")
+            errors.New("You can't leave 'rev' and 'kylling' together alone")
         }
 
         if len(strings.Fields(boat)) > 2 {
-            return errors.New("You cant bring more than TWO items/things on the boat")
+            errors.New("You cant bring more than TWO items/things on the boat")
         }
 
         east = tmpEast
     }
 
-    return true
 }
 
 func CrossRiverTo(place string){
@@ -62,6 +61,6 @@ func CrossRiverTo(place string){
         // All contents of boat gets put into east
         east = east + boat
     } else {
-        return errors.New(fmt.Sprintf("'%s' is an invalid place", place))
+        errors.New(fmt.Sprintf("'%s' is an invalid place", place))
     }
 }
